@@ -1,0 +1,32 @@
+@import "tailwindcss" source(none);
+
+@source "../index.html";
+@source "../assets/js";
+
+@theme {
+  --font-heading: "Source Serif Pro", ui-serif, Georgia, serif;
+  --font-display: "Bebas Neue", Impact, "Arial Narrow", sans-serif;
+  --font-body: "Poppins", ui-sans-serif, system-ui, sans-serif;
+
+  --color-ink: #231f20;
+  --color-ink-soft: #1c1d1d;
+  --color-muted: #707070;
+  --color-accent: #5c553a;
+  --color-primary: #5c7962;
+  --color-paper: #fffffa;
+  --color-track: #ddd6d7;
+
+  /* Section side padding: 24px on mobile, scales up to 128px at 1920px. */
+  --spacing-gutter: clamp(1.5rem, 6.667vw, 8rem);
+  /* Desktop card width: 355px at 1920px, never narrower than 240px. */
+  --spacing-card: clamp(15rem, 18.49vw, 22.1875rem);
+}
+
+/* Hides the native scrollbar; the custom one is drawn by JS. */
+@utility scrollbar-none {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
