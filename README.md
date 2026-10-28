@@ -2,8 +2,8 @@
 
 A "Best Sellers" product section built with **semantic HTML**, **Tailwind CSS v4** and **vanilla JavaScript**, recreated from the Figma design (desktop carousel and mobile grid).
 
-- **Live preview:** _coming soon (GitHub Pages)_
-- **Repository:** _coming soon_
+- **Live preview:** https://grossoluis.github.io/platter-challenge/
+- **Repository:** https://github.com/GrossoLuis/platter-challenge
 
 No build step is needed to review it: the compiled CSS is committed and the page is plain static HTML.
 
