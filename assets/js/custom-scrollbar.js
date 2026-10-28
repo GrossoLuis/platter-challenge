@@ -1,11 +1,6 @@
 const MIN_THUMB_WIDTH = 40;
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
-/**
- * Draws a custom horizontal scrollbar (track + thumb) for a scroll container.
- * Native scrollbars can't be styled consistently across browsers or grown on touch,
- * so the native one is hidden in CSS and this one mirrors and drives the scroll position.
- */
 export class CustomScrollbar {
   #scroller;
   #bar;
@@ -52,7 +47,6 @@ export class CustomScrollbar {
     const { scrollWidth, clientWidth, scrollLeft } = this.#scroller;
     const hasOverflow = this.#maxScroll > 1;
 
-    // No overflow (mobile grid or very wide screens): no scrollbar and no useless tab stop.
     this.#bar.hidden = !hasOverflow;
     this.#scroller.tabIndex = hasOverflow ? 0 : -1;
     if (!hasOverflow) return;
@@ -81,7 +75,6 @@ export class CustomScrollbar {
 
     if (isOnThumb) {
       this.#dragOffset = event.clientX - thumbRect.left;
-      // Mandatory snapping would pull the scroller back to the nearest card on every move.
       this.#scroller.style.scrollSnapType = 'none';
     } else {
       const behavior = reducedMotion.matches ? 'instant' : 'smooth';

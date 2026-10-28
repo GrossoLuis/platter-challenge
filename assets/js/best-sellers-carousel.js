@@ -1,11 +1,6 @@
 import { CustomScrollbar } from './custom-scrollbar.js';
 import { ShowMore } from './show-more.js';
 
-/**
- * <best-sellers-carousel> wires up the custom scrollbar (desktop) and Show More (mobile).
- * As a custom element it initializes itself whenever it is inserted into the DOM, which also
- * covers Shopify's theme editor re-rendering the section, and cleans up when removed.
- */
 class BestSellersCarousel extends HTMLElement {
   #controller = null;
 

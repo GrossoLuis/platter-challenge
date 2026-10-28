@@ -13,7 +13,6 @@
   <script type="module" src="./assets/js/best-sellers-carousel.js"></script>
 </head>
 <body class="bg-white font-body text-ink antialiased">
-  <!-- Icon sprite. Kept rendered (not display:none) so the half-star gradient resolves. -->
   <svg class="absolute size-0 overflow-hidden" aria-hidden="true" focusable="false">
     <defs>
       <linearGradient id="star-half-fill" x1="0" x2="1" y1="0" y2="0">
@@ -41,7 +40,6 @@
           </a>
         </header>
 
-        <!-- Mobile: collapsible two-column grid. Desktop: horizontal scroll region that bleeds to the right edge. -->
         <div id="best-sellers-scroller" data-scroller role="region" aria-label="Best sellers products" tabindex="0"
              class="relative scrollbar-none max-md:overflow-hidden max-md:transition-[height] max-md:duration-500 max-md:ease-in-out motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink md:-mr-gutter md:snap-x md:snap-mandatory md:overflow-x-auto md:pr-gutter">
           <ul class="grid grid-cols-2 gap-3 md:flex md:gap-6">
@@ -373,7 +371,6 @@
           </ul>
         </div>
 
-        <!-- Custom scrollbar (desktop). Decorative for assistive tech: the region above is keyboard scrollable. -->
         <div data-scrollbar aria-hidden="true" class="group relative mt-10.5 hidden h-4 cursor-pointer touch-none md:block">
           <div class="absolute inset-x-0 top-1/2 h-1 -translate-y-1/2 rounded-full bg-track"></div>
           <div data-scrollbar-thumb class="absolute top-1/2 left-0 h-1 w-0 -translate-y-1/2 rounded-full bg-ink transition-[height] duration-200 group-hover:h-1.5 data-active:h-1.5 motion-reduce:transition-none"></div>

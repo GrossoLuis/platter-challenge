@@ -29,20 +29,16 @@
   --tracking-label: 0.03em;
   --leading-label: 1.4;
 
-  /* Section side padding: 24px on mobile, scales up to 128px at 1920px. */
   --spacing-gutter: clamp(1.5rem, 6.667vw, 8rem);
-  /* Desktop card width: 355px at 1920px, never narrower than 240px. */
   --spacing-card: clamp(15rem, 18.49vw, 22.1875rem);
 }
 
-/* Pill badge over the product image (repeated on every card). */
 @layer components {
   .badge {
     @apply absolute top-1 rounded-full border border-black px-2 py-1 font-display text-badge leading-tight tracking-[0.04em] uppercase md:top-2 md:text-2xs md:tracking-[0.06em];
   }
 }
 
-/* Hides the native scrollbar; the custom one is drawn by JS. */
 @utility scrollbar-none {
   scrollbar-width: none;
 

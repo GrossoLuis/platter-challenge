@@ -131,9 +131,3 @@ All photos are free images from [Unsplash](https://unsplash.com), used under the
 | 8 | [Perfume](https://unsplash.com/photos/bUjiFIn3PLk) | [Perfume](https://unsplash.com/photos/zvqq7CG8BwY) |
 | 9 | [Earbuds](https://unsplash.com/photos/VQ1F3zxx6o0) | [Earbuds](https://unsplash.com/photos/Kf2kr_BhaTk) |
 | 10 | [Caps](https://unsplash.com/photos/WqP0fj5_T6U) | Same photo, zoomed crop |
-
-## What I'd improve with more time
-
-- Cross-browser testing on real devices (Safari iOS, Firefox, Chrome Android) and a Lighthouse pass.
-- Arrow buttons as an optional extra control for mouse users who don't notice horizontal scrolling.
-- In a Shopify theme: cache-busting for the modules imported by the entry file (an import map in `theme.liquid`).
