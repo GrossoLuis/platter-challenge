@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Best Sellers — Platter Challenge</title>
+  <meta name="description" content="Best Sellers product carousel built with semantic HTML, Tailwind CSS and vanilla JS." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://images.unsplash.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Poppins:wght@400;500;600&amp;family=Source+Serif+Pro:wght@700;900&amp;display=swap" />
+  <link rel="stylesheet" href="./assets/css/styles.css" />
+  <script type="module" src="./assets/js/best-sellers-carousel.js"></script>
+</head>
+<body class="bg-white font-body text-ink antialiased">
+  <!-- Icon sprite. Kept rendered (not display:none) so the half-star gradient resolves. -->
+  <svg class="absolute size-0 overflow-hidden" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="star-half-fill" x1="0" x2="1" y1="0" y2="0">
+        <stop offset="0.5" stop-color="currentColor" />
+        <stop offset="0.5" stop-color="#cfcfcf" />
+      </linearGradient>
+      <path id="star-shape" d="M6.32.89a.75.75 0 0 0-.64 0c-.18.08-.28.23-.33.31-.05.08-.1.19-.15.29L4.12 3.67l-2.41.36c-.11.01-.23.03-.32.05-.1.03-.26.07-.4.21a.75.75 0 0 0-.2.62c.03.19.14.33.2.4.06.07.15.16.23.24l1.74 1.69-.41 2.4c-.02.11-.04.23-.05.33 0 .09-.01.27.08.44.11.2.3.34.52.38.2.04.36-.03.45-.06.09-.04.19-.09.3-.15L6 9.45l2.16 1.13c.1.06.2.11.29.15.09.04.25.1.45.06a.75.75 0 0 0 .52-.38c.09-.17.08-.35.08-.44-.01-.1-.03-.21-.05-.33l-.41-2.4 1.74-1.7c.08-.08.17-.16.23-.23.06-.07.17-.21.2-.4a.75.75 0 0 0-.2-.62c-.14-.14-.3-.18-.4-.21-.09-.02-.21-.04-.32-.05l-2.41-.36L6.8 1.49c-.05-.1-.1-.21-.15-.29-.05-.08-.15-.23-.33-.31Z" />
+    </defs>
+    <symbol id="icon-star" viewBox="0 0 12 12"><use href="#star-shape" fill="currentColor" /></symbol>
+    <symbol id="icon-star-half" viewBox="0 0 12 12"><use href="#star-shape" fill="url(#star-half-fill)" /></symbol>
+  </svg>
+
+  <main>
+    <h1 class="sr-only">Platter Front-end Challenge</h1>
+
+    <best-sellers-carousel class="block" data-mobile-visible="4" data-label-more="Show More" data-label-less="Show Less">
+      <section aria-labelledby="best-sellers-heading" class="overflow-x-clip px-gutter py-9 md:pt-20 md:pb-23.5">
+        <header class="mb-6 flex items-center justify-center md:mb-9 md:justify-between">
+          <h2 id="best-sellers-heading" class="font-heading text-heading font-bold md:text-heading-lg md:font-black">Best Sellers</h2>
+          <a href="#" class="hidden items-center gap-2 rounded-full px-8 py-4 text-sm leading-label font-semibold tracking-label text-accent hover:underline hover:underline-offset-4 focus-visible:outline-2 focus-visible:outline-accent md:inline-flex">
+            Shop All Best Sellers
+            <svg class="size-5" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false">
+              <path d="M3.333 10h13.334m-5 5 5-5-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </a>
+        </header>
+
+        <!-- Mobile: collapsible two-column grid. Desktop: horizontal scroll region that bleeds to the right edge. -->
+        <div id="best-sellers-scroller" data-scroller role="region" aria-label="Best sellers products" tabindex="0"
+             class="scrollbar-none max-md:overflow-hidden max-md:transition-[height] max-md:duration-500 max-md:ease-in-out motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink md:-mr-gutter md:snap-x md:snap-mandatory md:overflow-x-auto md:pr-gutter">
+          <ul class="grid grid-cols-2 gap-3 md:flex md:gap-6">
+            <li class="md:w-card md:shrink-0 md:snap-start">
+              <article class="flex flex-col gap-3 pb-2 md:gap-4 md:pb-4" aria-labelledby="product-1-title">
+                <a href="#" class="group/card flex flex-col gap-3 rounded-[10px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink md:gap-4">
+                  <div class="group/media relative aspect-square overflow-hidden rounded-[10px] bg-track">
+                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&amp;fit=crop&amp;ar=1:1&amp;w=720&amp;q=80"
+                         srcset="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&amp;fit=crop&amp;ar=1:1&amp;w=360&amp;q=80 360w,
+                         https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&amp;fit=crop&amp;ar=1:1&amp;w=540&amp;q=80 540w,
+                         https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&amp;fit=crop&amp;ar=1:1&amp;w=720&amp;q=80 720w"
+                         sizes="(min-width: 48rem) 355px, 50vw" width="720" height="720"
+                         alt="Black over-ear headphones on a yellow background"
+                         class="size-full object-cover" loading="eager" fetchpriority="high" decoding="async" />
+                    <img src="https://images.unsplash.com/photo-1505751171710-1f6d0ace5a85?auto=format&amp;fit=crop&amp;ar=1:1&amp;w=720&amp;q=80"
+                         srcset="https://images.unsplash.com/photo-1505751171710-1f6d0ace5a85?auto=format&amp;fit=crop&amp;ar=1:1&amp;w=360&amp;q=80 360w,
+                         https://images.unsplash.com/photo-1505751171710-1f6d0ace5a85?auto=format&amp;fit=crop&amp;ar=1:1&amp;w=540&amp;q=80 540w,
+                         https://images.unsplash.com/photo-1505751171710-1f6d0ace5a85?auto=format&amp;fit=crop&amp;ar=1:1&amp;w=720&amp;q=80 720w"
+                         sizes="(min-width: 48rem) 355px, 50vw" width="720" height="720" alt=""
+                         class="absolute inset-0 size-full object-cover opacity-0 transition-opacity duration-300 group-hover/media:opacity-100 group-focus-visible/card:opacity-100 motion-reduce:transition-none"
+                         loading="lazy" decoding="async" />
+                    <span class="badge left-1 bg-white text-black md:left-2">Best Seller</span>
+                  </div>
+                  <h3 id="product-1-title" class="px-2 font-display text-base leading-tight tracking-label text-ink-soft uppercase md:px-3 md:text-lg">Outside Vibes T-Shirt Sunshine</h3>
+                </a>
+                <div class="flex flex-col gap-2 px-2 md:px-3">
+                  <p class="flex items-center gap-1 text-caption text-muted md:text-xs">
+                    <span class="sr-only">Rated 4.5 out of 5 stars.</span>
+                    <span class="flex gap-0.5 text-ink" aria-hidden="true"><svg class="size-2.25 md:size-3"><use href="#icon-star" /></svg><svg class="size-2.25 md:size-3"><use href="#icon-star" /></svg><svg class="size-2.25 md:size-3"><use href="#icon-star" /></svg><svg class="size-2.25 md:size-3"><use href="#icon-star" /></svg><svg class="size-2.25 md:size-3"><use href="#icon-star-half" /></svg></span>
+                    1,234 Reviews
+                  </p>
+                  <p class="font-medium text-ink-soft">$104.95</p>
+                </div>
+              </article>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Custom scrollbar (desktop). Decorative for assistive tech: the region above is keyboard scrollable. -->
+        <div data-scrollbar aria-hidden="true" class="group relative mt-10.5 hidden h-4 cursor-pointer touch-none md:block">
+          <div class="absolute inset-x-0 top-1/2 h-1 -translate-y-1/2 rounded-full bg-track"></div>
+          <div data-scrollbar-thumb class="absolute top-1/2 left-0 h-1 w-0 -translate-y-1/2 rounded-full bg-ink transition-[height] duration-200 group-hover:h-1.5 data-active:h-1.5 motion-reduce:transition-none"></div>
+        </div>
+
+        <button type="button" data-show-more aria-expanded="false" aria-controls="best-sellers-scroller" hidden
+                class="mt-3 w-full rounded-full bg-ink-soft px-6 py-4 text-base leading-label font-semibold tracking-label text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink md:hidden">
+          Show More
+        </button>
+      </section>
+    </best-sellers-carousel>
+  </main>
+</body>
+</html>
