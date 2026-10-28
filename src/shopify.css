@@ -1,0 +1,26 @@
+@layer theme, utilities;
+@import "tailwindcss/theme.css" layer(theme) prefix(tw);
+@import "tailwindcss/utilities.css" layer(utilities) important source(none);
+@import "./tokens.css";
+
+@source "../shopify/sections";
+@source "../shopify/snippets";
+
+.best-sellers :where(h2, h3, p, ul) {
+  margin: 0;
+}
+
+.best-sellers ul {
+  padding: 0;
+  list-style: none;
+}
+
+.best-sellers button {
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
+.best-sellers [hidden] {
+  display: none !important;
+}

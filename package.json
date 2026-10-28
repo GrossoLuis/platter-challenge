@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "tailwindcss -i ./src/input.css -o ./assets/css/styles.css --watch",
     "build": "tailwindcss -i ./src/input.css -o ./assets/css/styles.css --minify",
+    "build:shopify": "tailwindcss -i ./src/shopify.css -o ./shopify/assets/best-sellers.css --minify",
     "serve": "serve ."
   },
   "devDependencies": {
