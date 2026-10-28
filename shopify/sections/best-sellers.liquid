@@ -1,0 +1,98 @@
+{{ 'best-sellers.css' | asset_url | stylesheet_tag }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600&family=Source+Serif+Pro:wght@700;900&display=swap">
+<script src="{{ 'best-sellers-carousel.js' | asset_url }}" type="module"></script>
+
+{%- liquid
+  assign collection = section.settings.collection
+  assign heading_id = 'BestSellersHeading-' | append: section.id
+  assign scroller_id = 'BestSellersScroller-' | append: section.id
+  assign icon_id = 'BestSellersStar-' | append: section.id
+  assign link_url = section.settings.link_url | default: collection.url | default: routes.all_products_collection_url
+-%}
+
+<best-sellers-carousel
+  class="best-sellers tw:block tw:bg-white tw:font-body tw:leading-normal tw:text-ink tw:antialiased"
+  data-mobile-visible="{{ section.settings.mobile_visible }}"
+  data-label-more="{{ section.settings.show_more_label | escape }}"
+  data-label-less="{{ section.settings.show_less_label | escape }}"
+>
+  <svg class="tw:absolute tw:size-0 tw:overflow-hidden" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="{{ icon_id }}-gradient" x1="0" x2="1" y1="0" y2="0">
+        <stop offset="0.5" stop-color="currentColor" />
+        <stop offset="0.5" stop-color="#cfcfcf" />
+      </linearGradient>
+      <path id="{{ icon_id }}-shape" d="M6.32.89a.75.75 0 0 0-.64 0c-.18.08-.28.23-.33.31-.05.08-.1.19-.15.29L4.12 3.67l-2.41.36c-.11.01-.23.03-.32.05-.1.03-.26.07-.4.21a.75.75 0 0 0-.2.62c.03.19.14.33.2.4.06.07.15.16.23.24l1.74 1.69-.41 2.4c-.02.11-.04.23-.05.33 0 .09-.01.27.08.44.11.2.3.34.52.38.2.04.36-.03.45-.06.09-.04.19-.09.3-.15L6 9.45l2.16 1.13c.1.06.2.11.29.15.09.04.25.1.45.06a.75.75 0 0 0 .52-.38c.09-.17.08-.35.08-.44-.01-.1-.03-.21-.05-.33l-.41-2.4 1.74-1.7c.08-.08.17-.16.23-.23.06-.07.17-.21.2-.4a.75.75 0 0 0-.2-.62c-.14-.14-.3-.18-.4-.21-.09-.02-.21-.04-.32-.05l-2.41-.36L6.8 1.49c-.05-.1-.1-.21-.15-.29-.05-.08-.15-.23-.33-.31Z" />
+    </defs>
+    <symbol id="{{ icon_id }}-full" viewBox="0 0 12 12"><use href="#{{ icon_id }}-shape" fill="currentColor" /></symbol>
+    <symbol id="{{ icon_id }}-half" viewBox="0 0 12 12"><use href="#{{ icon_id }}-shape" fill="url(#{{ icon_id }}-gradient)" /></symbol>
+    <symbol id="{{ icon_id }}-empty" viewBox="0 0 12 12"><use href="#{{ icon_id }}-shape" fill="#cfcfcf" /></symbol>
+  </svg>
+
+  <section aria-labelledby="{{ heading_id }}" class="tw:overflow-x-clip tw:px-gutter tw:py-9 tw:md:pt-20 tw:md:pb-23.5">
+    <header class="tw:mb-6 tw:flex tw:items-center tw:justify-center tw:md:mb-9 tw:md:justify-between">
+      <h2 id="{{ heading_id }}" class="tw:font-heading tw:text-heading tw:font-bold tw:text-ink tw:normal-case tw:md:text-heading-lg tw:md:font-black">
+        {{- section.settings.heading | escape -}}
+      </h2>
+      {%- if section.settings.link_label != blank -%}
+        <a href="{{ link_url }}" class="tw:hidden tw:items-center tw:gap-2 tw:rounded-full tw:px-8 tw:py-4 tw:text-sm tw:leading-label tw:font-semibold tw:tracking-label tw:text-accent tw:hover:underline tw:hover:underline-offset-4 tw:focus-visible:outline-2 tw:focus-visible:outline-accent tw:md:inline-flex">
+          {{- section.settings.link_label | escape }}
+          <svg class="tw:size-5" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false">
+            <path d="M3.333 10h13.334m-5 5 5-5-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+      {%- endif -%}
+    </header>
+
+    <div id="{{ scroller_id }}" data-scroller role="region" aria-label="{{ section.settings.heading | escape }}" tabindex="0"
+         class="tw:relative tw:scrollbar-none tw:max-md:overflow-hidden tw:max-md:transition-[height] tw:max-md:duration-500 tw:max-md:ease-in-out tw:motion-reduce:transition-none tw:focus-visible:outline-2 tw:focus-visible:outline-offset-4 tw:focus-visible:outline-ink tw:md:-mr-gutter tw:md:snap-x tw:md:snap-mandatory tw:md:overflow-x-auto tw:md:pr-gutter">
+      <ul class="tw:grid tw:grid-cols-2 tw:gap-3 tw:md:flex tw:md:gap-6">
+        {%- liquid
+          if collection.products_count > 0
+            for product in collection.products limit: section.settings.products_to_show
+              render 'best-sellers-card', product: product, index: forloop.index, section_id: section.id, icon_id: icon_id, show_secondary_image: section.settings.show_secondary_image, show_rating: section.settings.show_rating, badge_tag: section.settings.badge_tag, badge_label: section.settings.badge_label
+            endfor
+          else
+            for i in (1..section.settings.products_to_show)
+              render 'best-sellers-card', index: forloop.index, section_id: section.id
+            endfor
+          endif
+        -%}
+      </ul>
+    </div>
+
+    <div data-scrollbar aria-hidden="true" class="tw:group tw:relative tw:mt-10.5 tw:hidden tw:h-4 tw:cursor-pointer tw:touch-none tw:md:block">
+      <div class="tw:absolute tw:inset-x-0 tw:top-1/2 tw:h-1 tw:-translate-y-1/2 tw:rounded-full tw:bg-track"></div>
+      <div data-scrollbar-thumb class="tw:absolute tw:top-1/2 tw:left-0 tw:h-1 tw:-translate-y-1/2 tw:rounded-full tw:bg-ink tw:transition-[height] tw:duration-200 tw:group-hover:h-1.5 tw:data-active:h-1.5 tw:motion-reduce:transition-none"></div>
+    </div>
+
+    <button type="button" data-show-more aria-expanded="false" aria-controls="{{ scroller_id }}" hidden
+            class="tw:mt-3 tw:w-full tw:rounded-full tw:bg-ink-soft tw:px-6 tw:py-4 tw:text-base tw:leading-label tw:font-semibold tw:tracking-label tw:text-paper tw:focus-visible:outline-2 tw:focus-visible:outline-offset-2 tw:focus-visible:outline-ink tw:md:hidden">
+      {{- section.settings.show_more_label | escape -}}
+    </button>
+  </section>
+</best-sellers-carousel>
+
+{% schema %}
+{
+  "name": "Best Sellers",
+  "class": "section-best-sellers",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Best Sellers" },
+    { "type": "text", "id": "link_label", "label": "Link label", "default": "Shop All Best Sellers" },
+    { "type": "url", "id": "link_url", "label": "Link URL", "info": "Defaults to the selected collection." },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "products_to_show", "label": "Products to show", "min": 4, "max": 16, "step": 1, "default": 10 },
+    { "type": "range", "id": "mobile_visible", "label": "Products visible on mobile before \"Show more\"", "min": 2, "max": 8, "step": 2, "default": 4 },
+    { "type": "text", "id": "show_more_label", "label": "Show more button label", "default": "Show More" },
+    { "type": "text", "id": "show_less_label", "label": "Show less button label", "default": "Show Less" },
+    { "type": "checkbox", "id": "show_secondary_image", "label": "Show second image on hover", "default": true },
+    { "type": "checkbox", "id": "show_rating", "label": "Show product rating", "default": true },
+    { "type": "text", "id": "badge_tag", "label": "Product tag for the badge", "default": "best-seller" },
+    { "type": "text", "id": "badge_label", "label": "Badge label", "default": "Best Seller" }
+  ],
+  "presets": [{ "name": "Best Sellers" }]
+}
+{% endschema %}
