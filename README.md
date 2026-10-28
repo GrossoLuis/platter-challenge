@@ -4,6 +4,7 @@ A "Best Sellers" product section built with **semantic HTML**, **Tailwind CSS v4
 
 - **Live preview:** https://grossoluis.github.io/platter-challenge/
 - **Repository:** https://github.com/GrossoLuis/platter-challenge
+- **Bonus — Shopify section:** https://platter-challenge-1.myshopify.com/ (password: `platter`)
 
 No build step is needed to review it: the compiled CSS is committed and the page is plain static HTML.
 
@@ -20,7 +21,7 @@ No build step is needed to review it: the compiled CSS is committed and the page
 ## Tech stack
 
 - **HTML5**: one semantic document, no templating.
-- **Tailwind CSS v4**: compiled with the official CLI, minified and committed (`assets/css/styles.css`). Design tokens live in `@theme` in `src/input.css`.
+- **Tailwind CSS v4**: compiled with the official CLI, minified and committed (`assets/css/styles.css`). Design tokens live in `@theme` in `src/tokens.css`.
 - **Vanilla JS**: ES modules and a custom element, no dependencies.
 
 ## Key decisions
@@ -83,13 +84,20 @@ The commit history follows these steps one change at a time.
 
 ```
 ├── index.html                    # The page
-├── src/input.css                 # Tailwind entry: theme tokens, badge component, scrollbar utility
+├── src/
+│   ├── tokens.css                # Design tokens and the scrollbar utility, shared by both builds
+│   ├── input.css                 # Tailwind entry for the HTML version
+│   └── shopify.css               # Tailwind entry for the Shopify section (prefixed, no preflight)
 ├── assets/
 │   ├── css/styles.css            # Compiled + minified CSS (committed)
 │   └── js/
 │       ├── best-sellers-carousel.js  # Custom element, composes the two modules below
 │       ├── custom-scrollbar.js       # CustomScrollbar
 │       └── show-more.js              # ShowMore
+└── shopify/                      # Bonus: drop-in theme files
+    ├── sections/best-sellers.liquid
+    ├── snippets/best-sellers-card.liquid
+    └── assets/                   # Compiled CSS + the same three JS modules
 ```
 
 ## Run locally (optional)
@@ -100,13 +108,44 @@ npm run dev     # rebuild CSS on change
 npm run serve   # serve the folder (ES modules need http://, not file://)
 ```
 
-`npm run build` produces the minified CSS that is committed.
+`npm run build` produces the minified CSS that is committed. `npm run build:shopify` compiles the section's CSS into `shopify/assets/`.
+
+## Bonus: Shopify section
+
+The same component as a theme section, running on a development store with the Horizon theme.
+
+**Install.** Copy `shopify/sections`, `shopify/snippets` and `shopify/assets` into any Online Store 2.0 theme, then add **Best Sellers** from the theme editor.
+
+**Settings.**
+- Heading, and the "Shop all" link label and URL (defaults to the collection).
+- Collection, number of products, and how many stay visible on mobile.
+- Show More / Show Less labels.
+- Toggles for the hover image and the rating.
+- Product tag and label for the "Best Seller" badge.
+
+**Data.**
+- Products come from the selected collection; without one, the section renders placeholder cards so it can be previewed right away.
+- The secondary image is the product's second image.
+- "Save X%" is calculated from the compare-at price.
+- The rating reads the standard `reviews.rating` and `reviews.rating_count` metafields and is hidden when they are missing.
+- All ids include `section.id`, so the section can be added more than once.
+
+**Tailwind inside a theme.** Loading Tailwind as-is would break the theme: preflight resets every element, and unlayered theme CSS always beats layered utilities. So the section build:
+- skips preflight and imports only Tailwind's theme and utilities;
+- prefixes every class (`tw:flex`, `tw:md:grid-cols-2`) so nothing clashes with theme classes such as `.grid` or `.hidden`;
+- marks utilities `!important` so they win over the theme's element styles;
+- adds a small reset scoped to the section for the few element defaults the markup relies on.
+
+The design tokens live in `src/tokens.css` and are shared by both builds. `!important` utilities also beat inline styles, which the custom scrollbar uses to size its thumb, so the thumb has no width class.
+
+**JavaScript.** The three modules are copied unchanged. Because `<best-sellers-carousel>` is a custom element, it sets itself up again when the theme editor re-renders the section and cleans up when it is removed. Texts and the mobile count come from section settings through `data-*` attributes.
 
 ## Testing
 
 - Chrome (desktop and mobile emulation) at 320, 375, 390, 768, 1024, 1440 and 1920px.
 - No console errors, and no horizontal page overflow at any width.
 - All 20 image URLs return `200`.
+- Shopify section: same checks on the development store (Horizon) at 375, 1024, 1366, 1440 and 1920px.
 
 ## Image credits
 
