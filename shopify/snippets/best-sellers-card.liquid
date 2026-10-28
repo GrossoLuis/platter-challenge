@@ -1,0 +1,103 @@
+{%- liquid
+  assign title_id = 'BestSellersTitle-' | append: section_id | append: '-' | append: index
+  assign sizes = '(min-width: 48rem) 355px, 50vw'
+  assign badge_class = 'tw:absolute tw:top-1 tw:rounded-full tw:border tw:border-black tw:px-2 tw:py-1 tw:font-display tw:text-badge tw:leading-tight tw:tracking-[0.04em] tw:uppercase tw:md:top-2 tw:md:text-2xs tw:md:tracking-[0.06em]'
+
+  if index <= 4
+    assign loading = 'eager'
+  else
+    assign loading = 'lazy'
+  endif
+
+  if index == 1
+    assign fetchpriority = 'high'
+  else
+    assign fetchpriority = 'auto'
+  endif
+
+  if product.compare_at_price > product.price
+    assign discount = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round
+  endif
+
+  assign rating = product.metafields.reviews.rating.value
+  assign score = rating.rating | plus: 0.0
+  assign rating_count = product.metafields.reviews.rating_count.value
+  if rating_count >= 1000
+    assign remainder = rating_count | modulo: 1000 | plus: 1000 | append: '' | slice: 1, 3
+    assign rating_count = rating_count | divided_by: 1000 | append: ',' | append: remainder
+  endif
+-%}
+
+<li class="tw:md:w-card tw:md:shrink-0 tw:md:snap-start">
+  <article class="tw:flex tw:flex-col tw:gap-3 tw:pb-2 tw:md:gap-4 tw:md:pb-4" aria-labelledby="{{ title_id }}">
+    <a href="{{ product.url | default: '#' }}" class="tw:group/card tw:flex tw:flex-col tw:gap-3 tw:rounded-[10px] tw:no-underline tw:focus-visible:outline-2 tw:focus-visible:outline-offset-4 tw:focus-visible:outline-ink tw:md:gap-4">
+      <div class="tw:group/media tw:relative tw:aspect-square tw:overflow-hidden tw:rounded-[10px] tw:bg-track">
+        {%- if product.featured_image -%}
+          {{
+            product.featured_image
+            | image_url: width: 720
+            | image_tag:
+              widths: '360, 540, 720',
+              sizes: sizes,
+              loading: loading,
+              fetchpriority: fetchpriority,
+              decoding: 'async',
+              class: 'tw:size-full tw:object-cover'
+          }}
+          {%- if show_secondary_image and product.images.size > 1 -%}
+            {{
+              product.images[1]
+              | image_url: width: 720
+              | image_tag:
+                widths: '360, 540, 720',
+                sizes: sizes,
+                loading: 'lazy',
+                decoding: 'async',
+                alt: '',
+                class: 'tw:absolute tw:inset-0 tw:size-full tw:object-cover tw:opacity-0 tw:transition-opacity tw:duration-300 tw:group-hover/media:opacity-100 tw:group-focus-visible/card:opacity-100 tw:motion-reduce:transition-none'
+            }}
+          {%- endif -%}
+        {%- else -%}
+          {%- assign placeholder = index | minus: 1 | modulo: 6 | plus: 1 -%}
+          {{ 'product-' | append: placeholder | placeholder_svg_tag: 'tw:size-full' }}
+        {%- endif -%}
+
+        {%- if badge_tag != blank and product.tags contains badge_tag -%}
+          <span class="{{ badge_class }} tw:left-1 tw:bg-white tw:text-black tw:md:left-2">{{ badge_label }}</span>
+        {%- endif -%}
+        {%- if discount > 0 -%}
+          <span class="{{ badge_class }} tw:right-1 tw:bg-primary tw:text-paper tw:md:right-2">Save {{ discount }}%</span>
+        {%- endif -%}
+      </div>
+      <h3 id="{{ title_id }}" class="tw:px-2 tw:font-display tw:text-base tw:leading-tight tw:tracking-label tw:text-ink-soft tw:uppercase tw:md:px-3 tw:md:text-lg">
+        {{- product.title | default: 'Product title' -}}
+      </h3>
+    </a>
+    <div class="tw:flex tw:flex-col tw:gap-2 tw:px-2 tw:md:px-3">
+      {%- if show_rating and rating != blank -%}
+        <p class="tw:flex tw:flex-wrap tw:items-center tw:gap-x-1 tw:text-caption tw:text-muted tw:md:text-xs">
+          <span class="tw:sr-only">Rated {{ score }} out of {{ rating.scale_max | round }} stars.</span>
+          <span class="tw:flex tw:gap-0.5 tw:text-ink" aria-hidden="true">
+            {%- for i in (1..5) -%}
+              {%- liquid
+                assign half_step = i | minus: 0.5
+                if score >= i
+                  assign star = 'full'
+                elsif score >= half_step
+                  assign star = 'half'
+                else
+                  assign star = 'empty'
+                endif
+              -%}
+              <svg class="tw:size-2.25 tw:md:size-3"><use href="#{{ icon_id }}-{{ star }}" /></svg>
+            {%- endfor -%}
+          </span>
+          {%- if rating_count != blank -%}
+            <span class="tw:whitespace-nowrap">{{ rating_count }} Reviews</span>
+          {%- endif -%}
+        </p>
+      {%- endif -%}
+      <p class="tw:font-medium tw:text-ink-soft">{{ product.price | default: 1999 | money }}</p>
+    </div>
+  </article>
+</li>
