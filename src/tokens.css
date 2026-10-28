@@ -1,0 +1,37 @@
+@theme {
+  --font-heading: "Source Serif Pro", ui-serif, Georgia, serif;
+  --font-display: "Bebas Neue", Impact, "Arial Narrow", sans-serif;
+  --font-body: "Poppins", ui-sans-serif, system-ui, sans-serif;
+
+  --color-ink: #231f20;
+  --color-ink-soft: #1c1d1d;
+  --color-muted: #707070;
+  --color-accent: #5c553a;
+  --color-primary: #5c7962;
+  --color-paper: #fffffa;
+  --color-track: #ddd6d7;
+
+  --text-badge: 0.5rem;
+  --text-2xs: 0.625rem;
+  --text-caption: 0.6875rem;
+  --text-heading: 1.75rem;
+  --text-heading--line-height: 1.26;
+  --text-heading--letter-spacing: -0.01em;
+  --text-heading-lg: 2.5rem;
+  --text-heading-lg--line-height: 1.2;
+  --text-heading-lg--letter-spacing: -0.01em;
+
+  --tracking-label: 0.03em;
+  --leading-label: 1.4;
+
+  --spacing-gutter: clamp(1.5rem, 6.667vw, 8rem);
+  --spacing-card: clamp(15rem, 18.49vw, 22.1875rem);
+}
+
+@utility scrollbar-none {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
