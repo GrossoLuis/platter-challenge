@@ -7,12 +7,6 @@ A "Best Sellers" product section built with **semantic HTML**, **Tailwind CSS v4
 
 No build step is needed to review it: the compiled CSS is committed and the page is plain static HTML.
 
-![Desktop](docs/screenshots/desktop.png)
-
-| Mobile | Mobile — after "Show More" |
-| --- | --- |
-| <img src="docs/screenshots/mobile.png" alt="Mobile layout with four products and the Show More button" width="300"> | <img src="docs/screenshots/mobile-expanded.png" alt="Mobile layout with all ten products" width="300"> |
-
 ## Requirements checklist
 
 - [x] 10 product cards
@@ -96,7 +90,6 @@ The commit history follows these steps one change at a time.
 │       ├── best-sellers-carousel.js  # Custom element, composes the two modules below
 │       ├── custom-scrollbar.js       # CustomScrollbar
 │       └── show-more.js              # ShowMore
-└── docs/screenshots/
 ```
 
 ## Run locally (optional)
